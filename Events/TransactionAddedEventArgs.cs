@@ -1,6 +1,5 @@
-
 using BudgetTracker.Models;
-using System.Transactions;
+
 namespace BudgetTracker.Events
 {
     public class TransactionAddedEventArgs : EventArgs
@@ -12,5 +11,4 @@ namespace BudgetTracker.Events
             Transaction = transaction;
         }
     }
-
 }

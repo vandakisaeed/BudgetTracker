@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "ebad6888-0890-4d84-b14c-c33bde227a23",
+    "Timestamp": "2025-11-18T15:52:54.759181Z",
+    "Type": 0,
+    "Description": "gehalt",
+    "Amount": 2000,
+    "Date": "2025-11-18T00:00:00Z"
+  },
+  {
+    "Id": "07c338a6-1f0e-45b3-8fb6-1fe1ce50339a",
+    "Timestamp": "2025-11-18T15:53:40.061172Z",
+    "Type": 1,
+    "Description": "miete",
+    "Amount": 530,
+    "Date": "2025-11-18T00:00:00Z"
+  }
+]

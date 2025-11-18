@@ -1,65 +1,109 @@
 using System.Text.Json;
 using BudgetTracker.Models;
 
-namespace BudgetTracker.Services
+namespace BudgetTracker.Services;
+
+public class StorageService
 {
-    public class StorageService
+    private readonly string _dataDirectory;
+
+    public StorageService(string dataDirectory)
     {
-        private readonly string _baseDirectory;
+        _dataDirectory = dataDirectory;
+        if (!Directory.Exists(_dataDirectory))
+            Directory.CreateDirectory(_dataDirectory);
+    }
 
-        public StorageService(string baseDirectory)
+    private string FilePathForDate(DateTime date)
+    {
+        var fileName = date.ToString("yyyy-MM-dd") + ".json";
+        return Path.Combine(_dataDirectory, fileName);
+    }
+
+    public void SaveTransaction(Transaction tx)
+    {
+        // Ensure Date property set (date-only from timestamp)
+        tx.Date = tx.Timestamp.Date;
+
+        var path = FilePathForDate(tx.Date);
+
+        List<Transaction> list = new();
+        if (File.Exists(path))
         {
-            _baseDirectory = baseDirectory;
-
-            // Create the directory if it does not exist
-            if (!Directory.Exists(_baseDirectory))
+            try
             {
-                Directory.CreateDirectory(_baseDirectory);
+                var text = File.ReadAllText(path);
+                list = JsonSerializer.Deserialize<List<Transaction>>(text) ?? new List<Transaction>();
+            }
+            catch
+            {
+                // If the file is malformed, overwrite with fresh list
+                list = new List<Transaction>();
             }
         }
 
-        // Save transaction to a JSON file for its date
-        public void SaveTransaction(ITransaction transaction)
+        list.Add(tx);
+
+        var json = JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(path, json);
+    }
+
+    public List<Transaction> ReadTransactions(DateTime date)
+    {
+        var path = FilePathForDate(date.Date);
+        if (!File.Exists(path))
+            return new List<Transaction>();
+
+        var text = File.ReadAllText(path);
+        try
         {
-            string path = GetFilePath(transaction.Date);
-
-            string json = JsonSerializer.Serialize(transaction, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
-
-            File.AppendAllText(path, json + Environment.NewLine);
+            return JsonSerializer.Deserialize<List<Transaction>>(text) ?? new List<Transaction>();
         }
-
-        // Read all transactions for a specific date
-        public List<ITransaction>? ReadTransactions(DateTime date)
+        catch
         {
-            string path = GetFilePath(date);
+            return new List<Transaction>();
+        }
+    }
 
-            if (!File.Exists(path))
+    public bool DeleteTransaction(Guid id)
+    {
+        // Scan all files in data directory to find and remove transaction
+        var files = Directory.GetFiles(_dataDirectory, "*.json");
+        foreach (var f in files)
+        {
+            try
             {
-                Console.WriteLine("File does not exist.");
-                return null;
+                var text = File.ReadAllText(f);
+                var list = JsonSerializer.Deserialize<List<Transaction>>(text);
+                if (list == null || list.Count == 0)
+                    continue;
+
+                var origCount = list.Count;
+                list.RemoveAll(t => t.Id == id);
+                if (list.Count != origCount)
+                {
+                    // write back (if empty, write empty array)
+                    var json = JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(f, json);
+                    return true;
+                }
             }
-
-            var lines = File.ReadAllLines(path);
-            var results = new List<ITransaction>();
-
-            foreach (var line in lines)
+            catch
             {
-                var item = JsonSerializer.Deserialize<Transaction>(line);
-                if (item != null)
-                    results.Add(item);
+                // ignore malformed files
             }
-
-            return results;
         }
 
-        // Build file path based on date
-        private string GetFilePath(DateTime date)
+        return false;
+    }
+
+    public IEnumerable<Transaction> GetTransactionsBetween(DateTime startInclusive, DateTime endInclusive)
+    {
+        var results = new List<Transaction>();
+        for (var date = startInclusive.Date; date <= endInclusive.Date; date = date.AddDays(1))
         {
-            string fileName = date.ToString("yyyy-MM-dd") + ".json";
-            return Path.Combine(_baseDirectory, fileName);
+            results.AddRange(ReadTransactions(date));
         }
+        return results;
     }
 }

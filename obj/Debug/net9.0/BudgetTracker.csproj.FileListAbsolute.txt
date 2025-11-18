@@ -12,3 +12,4 @@
 /Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.pdb
 /Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.genruntimeconfig.cache
 /Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/ref/BudgetTracker.dll
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.sourcelink.json
