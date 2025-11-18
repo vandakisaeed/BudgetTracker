@@ -1,0 +1,14 @@
+/Users/saeed/WBS/Backend/C#/BudgetTracker/bin/Debug/net9.0/BudgetTracker
+/Users/saeed/WBS/Backend/C#/BudgetTracker/bin/Debug/net9.0/BudgetTracker.deps.json
+/Users/saeed/WBS/Backend/C#/BudgetTracker/bin/Debug/net9.0/BudgetTracker.runtimeconfig.json
+/Users/saeed/WBS/Backend/C#/BudgetTracker/bin/Debug/net9.0/BudgetTracker.dll
+/Users/saeed/WBS/Backend/C#/BudgetTracker/bin/Debug/net9.0/BudgetTracker.pdb
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.GeneratedMSBuildEditorConfig.editorconfig
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.AssemblyInfoInputs.cache
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.AssemblyInfo.cs
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.csproj.CoreCompileInputs.cache
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.dll
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/refint/BudgetTracker.dll
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.pdb
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/BudgetTracker.genruntimeconfig.cache
+/Users/saeed/WBS/Backend/C#/BudgetTracker/obj/Debug/net9.0/ref/BudgetTracker.dll
